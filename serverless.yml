@@ -4,7 +4,6 @@ frameworkVersion: "2"
 
 plugins:
   - serverless-bundle
-  - serverless-aws-documentation
 
 provider:
   name: aws
