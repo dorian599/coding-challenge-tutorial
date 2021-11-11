@@ -20,9 +20,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{vsApiGwDEV}}/tutorials",
+					"raw": "{{ApiGwDEV}}/tutorials",
 					"host": [
-						"{{vsApiGwDEV}}"
+						"{{ApiGwDEV}}"
 					],
 					"path": [
 						"tutorials"
