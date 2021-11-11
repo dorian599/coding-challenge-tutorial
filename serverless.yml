@@ -1,0 +1,74 @@
+service: tutorial-demo
+
+frameworkVersion: "2"
+
+plugins:
+  - serverless-bundle
+  - serverless-aws-documentation
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  logRetentionInDays: 7
+  lambdaHashingVersion: "20201221"
+  environment:
+    TUTORIALS_TABLE_NAME: ${self:custom.TutorialsTable.name}
+  iamRoleStatements:
+    - ${file(./iam/TutorialsTableIAM.yml):TutorialsTableIAM}
+
+custom:
+  TutorialsTable:
+    name: !Ref TutorialsTable
+    arn: !GetAtt TutorialsTable.Arn
+  bundle:
+    linting: false
+
+functions:
+  createTutorial:
+    description: Creates a tutorial
+    handler: src/handlers/tutorial/createTutorial.handler
+    events:
+      - http:
+          method: POST
+          path: /tutorials
+          cors: true
+
+  getTutorial:
+    description: Retrieve the details about a particular tutorial given a tutorial ID
+    handler: src/handlers/tutorial/getTutorial.handler
+    events:
+      - http:
+          method: GET
+          path: /tutorials/{tutorialId}
+          cors: true
+
+  editTutorial:
+    description: Update the details of a particular tutorial given a tutorial ID
+    handler: src/handlers/tutorial/editTutorial.handler
+    events:
+      - http:
+          method: PUT
+          path: /tutorials/{tutorialId}
+          cors: true
+
+  listTutorials:
+    description: List all the existing tutorials
+    handler: src/handlers/tutorial/listTutorials.handler
+    events:
+      - http:
+          method: GET
+          path: /tutorials
+          cors: true
+
+  deleteTutorial:
+    description: Delete a particular tutorial given a tutorial ID
+    handler: src/handlers/tutorial/deleteTutorial.handler
+    events:
+      - http:
+          method: DELETE
+          path: /tutorials/{tutorialId}
+          cors: true
+
+resources:
+  Resources:
+    TutorialsTable: ${file(./resources/tutorialsTable.yml):TutorialsTable}
