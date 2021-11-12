@@ -4,6 +4,7 @@ frameworkVersion: "2"
 
 plugins:
   - serverless-bundle
+  - serverless-auto-swagger
 
 provider:
   name: aws

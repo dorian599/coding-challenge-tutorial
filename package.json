@@ -21,6 +21,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "serverless-auto-swagger": "^1.2.1",
     "serverless-bundle": "^5.0.2"
   }
 }
